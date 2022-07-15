@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CryptoDAO {
+public class CryptoDao {
 
     private final CryptoRepository cryptoRepository;
 

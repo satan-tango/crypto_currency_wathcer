@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserDAO {
+public class UserDao {
 
     private final UserRepository userRepository;
 

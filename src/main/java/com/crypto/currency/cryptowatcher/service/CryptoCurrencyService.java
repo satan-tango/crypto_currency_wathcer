@@ -1,6 +1,6 @@
 package com.crypto.currency.cryptowatcher.service;
 
-import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,6 +15,7 @@ import java.net.*;
 
 
 @Service
+@Slf4j
 public class CryptoCurrencyService {
 
     public String getCurrentCryptoPrice(String code) {
@@ -26,7 +27,7 @@ public class CryptoCurrencyService {
             JSONObject rootJsonObject = (JSONObject) rootJsonArray.get(0);
             currentPrice = String.valueOf(rootJsonObject.get("price_usd"));
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error("The string could not be parsed into an object");
         }
 
         return currentPrice;
@@ -53,8 +54,10 @@ public class CryptoCurrencyService {
             response = String.valueOf(res);
             return response;
 
-        } catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            log.error("Error in syntax URI");
+        } catch (IOException e) {
+            log.error("Error while getting data from API");
         }
         return response;
     }

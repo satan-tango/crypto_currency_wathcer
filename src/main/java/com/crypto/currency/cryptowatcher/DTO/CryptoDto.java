@@ -2,28 +2,27 @@ package com.crypto.currency.cryptowatcher.DTO;
 
 import com.crypto.currency.cryptowatcher.entity.CryptoEntity;
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 @Builder
 @Data
-public class CryptoDTO {
+public class CryptoDto {
 
     private String code;
 
     private String symbol;
 
-    public static CryptoDTO mapToCryptoDTO(CryptoEntity cryptoEntity) {
-        CryptoDTO cryptoDTO = CryptoDTO.builder()
+    public static CryptoDto mapToCryptoDTO(CryptoEntity cryptoEntity) {
+        CryptoDto cryptoDto = CryptoDto.builder()
                 .code(cryptoEntity.getCode())
                 .symbol(cryptoEntity.getSymbol())
                 .build();
-        return cryptoDTO;
+        return cryptoDto;
     }
 
-    public static CryptoEntity mapToCryptoEntity(CryptoDTO cryptoDTO) {
+    public static CryptoEntity mapToCryptoEntity(CryptoDto cryptoDto) {
         CryptoEntity cryptoEntity = new CryptoEntity();
-        cryptoEntity.setCode(cryptoDTO.getCode());
-        cryptoEntity.setSymbol(cryptoDTO.getSymbol());
+        cryptoEntity.setCode(cryptoDto.getCode());
+        cryptoEntity.setSymbol(cryptoDto.getSymbol());
         return cryptoEntity;
     }
 }

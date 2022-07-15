@@ -1,6 +1,6 @@
 package com.crypto.currency.cryptowatcher.service;
 
-import com.crypto.currency.cryptowatcher.DAO.CryptoDAO;
+import com.crypto.currency.cryptowatcher.DAO.CryptoDao;
 import com.crypto.currency.cryptowatcher.entity.CryptoEntity;
 import com.crypto.currency.cryptowatcher.entity.UserEntity;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Level;
 
 @EnableScheduling
 @Service
@@ -18,20 +17,20 @@ import java.util.logging.Level;
 @Slf4j
 public class CryptoCurrencyChangesService {
 
-    private final CryptoDAO cryptoDAO;
+    private final CryptoDao cryptoDao;
 
     private final CryptoCurrencyService cryptoCurrencyService;
 
 
     @Scheduled(fixedRate = 60000)
     private void cryptoCurrencyChangesService() {
-        List<CryptoEntity> cryptoList = cryptoDAO.findAllCrypto();
+        List<CryptoEntity> cryptoList = cryptoDao.findAllCrypto();
         for (CryptoEntity crypto : cryptoList) {
             List<UserEntity> users = crypto.getUsers();
             if (users != null) {
                 String currentPrice = cryptoCurrencyService.getCurrentCryptoPrice(crypto.getCode());
                 for (UserEntity user : users) {
-                    if (currentPrice == null) {
+                    if (currentPrice == "") {
                         continue;
                     }
                     double changes = Math.abs((Double.parseDouble(currentPrice) - Double.parseDouble(user.getRegistrationPrice())) / Double.parseDouble(user.getRegistrationPrice()) * 100);
